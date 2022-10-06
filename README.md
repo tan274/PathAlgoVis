@@ -1,3 +1,2 @@
-# Pathfinding-Algorithms-Visualizer
-# Visualizes BFS, DFS,  A* search, and Dijkstra’s algorithm
-
+Pathfinding Visualizer
+it shows DFS,BFS, A* Search, and Dijkstra's
