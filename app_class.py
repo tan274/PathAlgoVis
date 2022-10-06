@@ -5,7 +5,6 @@ from bfs_class import *
 from dfs_class import *
 from astar_class import *
 from dijkstra_class import *
-from bidirectional_class import *
 from visualize_path_class import *
 from maze_class import *
 
@@ -40,7 +39,7 @@ class App:
         self.dfs_button = Buttons(self, WHITE, 448, MAIN_BUTTON_Y_POS, MAIN_BUTTON_LENGTH, MAIN_BUTTON_HEIGHT, 'Depth-First Search')
         self.astar_button = Buttons(self, WHITE, 668, MAIN_BUTTON_Y_POS, MAIN_BUTTON_LENGTH, MAIN_BUTTON_HEIGHT, 'A-Star Search')
         self.dijkstra_button = Buttons(self, WHITE, 888, MAIN_BUTTON_Y_POS, MAIN_BUTTON_LENGTH, MAIN_BUTTON_HEIGHT, 'Dijkstra Search')
-        self.bidirectional_button = Buttons(self, WHITE, 1108, MAIN_BUTTON_Y_POS, MAIN_BUTTON_LENGTH, MAIN_BUTTON_HEIGHT, 'Bidirectional Search')
+       
 
         # Define Grid-Menu buttons
         self.start_end_node_button = Buttons(self, AQUAMARINE, 20, START_END_BUTTON_HEIGHT, GRID_BUTTON_LENGTH, GRID_BUTTON_HEIGHT, 'Start/End Node')
@@ -91,7 +90,7 @@ class App:
         self.dfs_button.draw_button(AQUAMARINE)
         self.astar_button.draw_button(AQUAMARINE)
         self.dijkstra_button.draw_button(AQUAMARINE)
-        self.bidirectional_button.draw_button(AQUAMARINE)
+      
 
 ##### Setup for Grid
     def sketch_hotbar(self):
@@ -229,9 +228,7 @@ class App:
                 if self.dijkstra_button.isOver(pos):
                     self.algorithm_state = 'dijkstra'
                     self.state = 'grid window'
-                if self.bidirectional_button.isOver(pos):
-                    self.algorithm_state = 'bidirectional'
-                    self.state = 'grid window'
+              
 
             # Get mouse position and check if it is hovering over button
             if event.type == pygame.MOUSEMOTION:
@@ -243,11 +240,9 @@ class App:
                     self.astar_button.colour = AQUAMARINE
                 elif self.dijkstra_button.isOver(pos):
                     self.dijkstra_button.colour = AQUAMARINE
-                elif self.bidirectional_button.isOver(pos):
-                    self.bidirectional_button.colour = AQUAMARINE
                 else:
                     self.bfs_button.colour, self.dfs_button.colour, self.astar_button.colour, self.dijkstra_button.colour, \
-                    self.bidirectional_button.colour = WHITE, WHITE, WHITE, WHITE, WHITE
+                    = WHITE, WHITE, WHITE, WHITE
 
 ##### PLAYING STATE FUNCTIONS #####
 
@@ -416,26 +411,10 @@ class App:
             else:
                 self.draw_text('NO ROUTE FOUND!', self.screen, [768, 384], 50, RED, FONT, centered=True)
 
-        ### BIDRECTIONAL ###
+       
 
-        elif self.algorithm_state == 'bidirectional':
-            self.bidirectional = Bidirectional(self, self.start_node_x, self.start_node_y, self.end_node_x, self.end_node_y, self.wall_pos)
-
-            if self.start_node_x or self.end_node_x is not None:
-                self.bidirectional.bidirectional_execute()
-
-            if self.bidirectional.route_found:
-                print(self.bidirectional.route_f)
-                print(self.bidirectional.route_r)
-                self.draw_path_f = VisualizePath(self.screen, self.start_node_x, self.start_node_y, None, self.bidirectional.route_f)
-                self.draw_path_r = VisualizePath(self.screen, self.end_node_x, self.end_node_y, None, self.bidirectional.route_r)
-
-                # Draw paths on the app
-                self.draw_path_f.draw_path()
-                self.draw_path_r.draw_path()
-
-            else:
-                self.draw_text('NO ROUTE FOUND!', self.screen, [768, 384], 50, RED, FONT, centered=True)
+         else:
+            self.draw_text('NO ROUTE FOUND!', self.screen, [768, 384], 50, RED, FONT, centered=True)
 
         pygame.display.update()
         self.state = 'aftermath'
